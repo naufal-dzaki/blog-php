@@ -57,7 +57,7 @@
 
             <div class="s-header__branding">
                 <p class="site-title">
-                    <a href="index.html" rel="home">Spurgeon.</a>
+                    <a href="index.php" rel="home">Ruangku.</a>
                 </p>
             </div>
 
@@ -68,7 +68,7 @@
                     <h3 class="s-header__nav-heading">Navigate to</h3>
     
                     <ul class="s-header__nav">
-                        <li class="current-menu-item"><a href="index.html" title="">Home</a></li>
+                        <li class="current-menu-item"><a href="index.php" title="">Home</a></li>
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
                     </ul> <!-- end s-header__nav -->
@@ -82,12 +82,11 @@
                 <div class="s-header__search-inner">
                     <div class="row">
     
-                        <form role="search" method="get" class="s-header__search-form" action="#">
+                        <form id="searchForm" class="s-header__search-form" action="search.php" method="GET">
                             <label>
-                                <span class="u-screen-reader-text">Search for:</span>
-                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="s" title="Search for:" autocomplete="off">
+                                <input type="search" id="searchInput" name="s" class="s-header__search-field" placeholder="Search for..." autocomplete="off">
                             </label>
-                            <input type="submit" class="s-header__search-submit" value="Search"> 
+                            <input type="submit" class="s-header__search-submit" value="Search">
                         </form>
     
                         <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
@@ -114,92 +113,46 @@
 
             <!-- hero -->
             <div class="hero">
+            <div class="hero__slider swiper-container">
+                <?php
+                $query_hero = "SELECT articles.*, users.username AS author_name 
+                            FROM articles 
+                            JOIN users ON articles.user_id = users.user_id 
+                            ORDER BY created_at DESC 
+                            LIMIT 3";
 
-                <div class="hero__slider swiper-container">
+                $result_hero = mysqli_query($koneksi, $query_hero);
+                ?>
 
-                    <div class="swiper-wrapper">
-                        <article class="hero__slide swiper-slide">
-                            <div class="hero__entry-image" style="background-image: url('images/thumbs/featured/featured-01_2000.jpg');"></div>
-                            <div class="hero__entry-text">
-                                <div class="hero__entry-text-inner">
-                                    <div class="hero__entry-meta">
-                                        <span class="cat-links">
-                                            <a href="category.html">Inspiration</a>
-                                        </span>
-                                    </div>
-                                    <h2 class="hero__entry-title">
-                                        <a href="single-standard.html">
-                                            Understanding and Using Negative Space.
-                                        </a>
-                                    </h2>
-                                    <p class="hero__entry-desc">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-                                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis 
-                                    nostrud corporis est laudantium voluptatum consectetur adipiscing. 
-                                    </p>
-                                    <a class="hero__more-link" href="single-standard.html">Read More</a>
-                                </div>
+                <div class="swiper-wrapper">
+                <?php while ($row = mysqli_fetch_assoc($result_hero)): ?>
+                <article class="hero__slide swiper-slide">
+                    <div class="hero__entry-image" style="background-image: url('uploads/<?= htmlspecialchars($row['image']) ?>');"></div>
+                    <div class="hero__entry-text">
+                        <div class="hero__entry-text-inner">
+                            <div class="hero__entry-meta">
+                                <span class="cat-links">
+                                    <a href="#"><?= htmlspecialchars($row['author_name']) ?></a>
+                                </span>
                             </div>
-                        </article>
-                        <article class="hero__slide swiper-slide">
-                            <div class="hero__entry-image" style="background-image: url('images/thumbs/featured/featured-02_2000.jpg');"></div>
-                            <div class="hero__entry-text">
-                                <div class="hero__entry-text-inner">
-                                    <div class="hero__entry-meta">
-                                        <span class="cat-links">
-                                            <a href="category.html">Health</a>
-                                        </span>
-                                    </div>
-                                    <h2 class="hero__entry-title">
-                                        <a href="single-standard.html">
-                                            10 Reasons Why Being in Nature Is Good For You.
-                                        </a>
-                                    </h2>
-                                    <p class="hero__entry-desc">
-                                    Voluptas harum sequi rerum quasi quisquam. Est tenetur ut doloribus in aliquid animi nostrum. Tempora 
-                                    quibusdam ad nulla. Quis autem possimus dolores est est fugiat saepe vel aut. Earum consequatur.
-                                    </p>
-                                    <a class="hero__more-link" href="single-standard.html">Read More</a>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="hero__slide swiper-slide">
-                            <div class="hero__entry-image" style="background-image: url('images/thumbs/featured/featured-03_2000.jpg');"></div>
-                            <div class="hero__entry-text">
-                                <div class="hero__entry-text-inner">
-                                    <div class="hero__entry-meta">
-                                        <span class="cat-links">
-                                            <a href="category.html">Lifestyle</a>
-                                        </span>
-                                    </div>
-                                    <h2 class="hero__entry-title">
-                                        <a href="single-standard.html">
-                                            Six Relaxation Techniques to Reduce Stress.
-                                        </a>
-                                    </h2>
-                                    <p class="hero__entry-desc">
-                                    Quasi consequatur quia excepturi ullam velit. Repellat velit vel occaecati neque perspiciatis quibusdam nulla. 
-                                    Unde et earum. Nostrum nulla optio debitis odio modi. Quis autem possimus dolores est est fugiat saepe vel aut.
-                                    </p>
-                                    <a class="hero__more-link" href="single-standard.html">Read More</a>
-                                </div>
-                            </div>
-                        </article>
-                    </div> <!-- swiper-wrapper -->
-
-                    <div class="swiper-pagination"></div>
-    
-                </div> <!-- end hero slider -->
-
-                <a href="#bricks" class="hero__scroll-down smoothscroll">
-                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-                    </svg>
-                    <span>Scroll</span>
-                </a>
-
-            </div> <!-- end hero -->
+                            <h2 class="hero__entry-title">
+                                <a href="single-standard.php?id=<?= $row['id'] ?>">
+                                    <?= htmlspecialchars($row['title']) ?>
+                                </a>
+                            </h2>
+                            <p class="hero__entry-desc">
+                                <?= htmlspecialchars(substr($row['content'], 0, 150)) ?>...
+                            </p>
+                            <a class="hero__more-link" href="single-standard.php?id=<?= $row['id'] ?>">Read More</a>
+                        </div>
+                    </div>
+                </article>
+                <?php endwhile; ?>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            </div>
+            <!-- end hero -->
 
 
             <!--  masonry -->
@@ -211,414 +164,57 @@
 
                         <div class="grid-sizer"></div>
 
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/statue-600.jpg" 
-                                        srcset="images/thumbs/masonry/statue-600.jpg 1x, images/thumbs/masonry/statue-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Design</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Naruto Uzumaki</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">Just a Normal Simple Blog Post.</a></h1>
-                                 </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla 
-                                    sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua cillum in.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
+                        <?php
 
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/beetle-600.jpg" 
-                                        srcset="images/thumbs/masonry/beetle-600.jpg 1x, images/thumbs/masonry/beetle-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Lifestyle</a>
-                                        </span>
-                                        <span class="post-date">
-                                            By:
-                                            <a href="#0">Sasuke Uchiha</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">Throwback To The Good Old Days.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Ipsam odio corrupti et dolores odit aliquid quo. Dolore consectetur a sit modi quam debitis non omnis. Enim ullam 
-                                    voluptatem ipsum soluta sed debitis nihil quasi. Et et et sit. Lorem ipsum Sed eiusmod esse aliqua sed incididunt.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
+                        // Ambil semua data artikel
+                        $limit = 6; // jumlah artikel per halaman
+                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // halaman saat ini
+                        $offset = ($page - 1) * $limit;
 
-                        <article class="brick entry" data-animate-el>
-            
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/grayscale-600.jpg" 
-                                        srcset="images/thumbs/masonry/grayscale-600.jpg 1x, images/thumbs/masonry/grayscale-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-            
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Design</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Naruto Uzumaki</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">5  Grayscale Coloring Techniques.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Quo saepe magni magnam expedita nobis. Rerum assumenda necessitatibus tempora dolorem. Harum animi tempora odio natus et 
-                                    et perferendis possimus. Aut quo mollitia libero molestiae aut molestiae voluptate tempore. Eius voluptatem eligendi .
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                            
-                        </article> <!-- end article -->
+                        // Ambil total artikel
+                        $totalResult = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM articles");
+                        $totalRow = mysqli_fetch_assoc($totalResult);
+                        $totalArticles = $totalRow['total'];
+                        $totalPages = ceil($totalArticles / $limit);
 
-                        <article class="brick entry" data-animate-el>
-            
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/woodcraft-600.jpg" 
-                                        srcset="images/thumbs/masonry/woodcraft-600.jpg 1x, images/thumbs/masonry/woodcraft-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-            
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Lifestyle</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Shikamaru Nara</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">What Minimalism Really Looks Like.</a></h1>
-                                 </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo 
-                                    est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua cillum in consequat consequat.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-            
-                        </article> <!-- end entry -->
-        
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/tulips-600.jpg" 
-                                        srcset="images/thumbs/masonry/tulips-600.jpg 1x, images/thumbs/masonry/tulips-1200.jpg 2x" alt="">
-                                </a>
-                            </div>  <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Health</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Kakashi Hatake</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">10 Interesting Facts About Caffeine.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Consequatur amet voluptatem aliquid fuga. Consequatur tempora eos earum deleniti repellendus ducimus. Qui ipsum voluptas 
-                                    sed et ad dignissimos explicabo maxime dolor. Rerum quia et. Suscipit similique et. Atque tenetur provident. Excepturi 
-                                    autem unde.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
+                        // Ambil artikel sesuai halaman
+                        $query = "SELECT articles.*, users.username AS author_name FROM articles 
+                                JOIN users ON articles.user_id = users.user_id
+                                ORDER BY created_at DESC
+                                LIMIT $limit OFFSET $offset";
+                        $result = mysqli_query($koneksi, $query);
+                        ?>
 
-                        
-
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/red-and-blue-600.jpg" 
-                                        srcset="images/thumbs/masonry/red-and-blue-600.jpg 1x, images/thumbs/masonry/red-and-blue-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Work</a> 
-                                            <a href="#">Design</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Shikamaru Nara</a>
-                                        </span>
+                        <!-- Loop Artikel -->
+                        <?php
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                <article class="brick entry" data-animate-el>
+                                    <div class="entry__thumb">
+                                        <a href="single-standard.php?id=<?= $row['id'] ?>" class="thumb-link">
+                                            <img src="uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['title']) ?>">
+                                        </a>
                                     </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">Red and Blue Photo Effects.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed commodo 
-                                    est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua cillum in consequat consequat in
-                                    culpa in anim.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
-        
-                        <article class="brick entry" data-animate-el>
-                
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/white-lamp-600.jpg" 
-                                        srcset="images/thumbs/masonry/white-lamp-600.jpg 1x, images/thumbs/masonry/white-lamp-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-                
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Lifestyle</a>
-                                            <a href="#">Work</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Naruto Uzumaki</a>
-                                        </span>
+                                    <div class="entry__text">
+                                        <div class="entry__header">
+                                            <div class="entry__meta">
+                                                <span class="byline">By: <a href="#"><?= htmlspecialchars($row['author_name']) ?></a></span>
+                                            </div>
+                                            <h1 class="entry__title"><a href="single-standard.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['title']) ?></a></h1>
+                                        </div>
+                                        <div class="entry__excerpt">
+                                            <p><?= htmlspecialchars(substr($row['content'], 0, 150)) ?>...</p>
+                                        </div>
+                                        <a class="entry__more-link" href="single-standard.php?id=<?= $row['id'] ?>">Read More</a>
                                     </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">10 Practical Ways to Be Minimalist.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Ratione qui voluptas reprehenderit facilis soluta ut nam. Distinctio cum excepturi et. Aperiam blanditiis voluptatem.
-                                    A esse sunt nesciunt voluptate. Architecto voluptas id rerum placeat nostrum et optio. Placeat occaecati voluptas.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                                
-                        </article> <!-- end article -->
-        
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/books-600.jpg" 
-                                        srcset="images/thumbs/masonry/books-600.jpg 1x, images/thumbs/masonry/books-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Health</a>
-                                            <a href="#">Lifestyle</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Sakura Haruno</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">What Does Reading Do to Your Brain?</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla sed 
-                                    commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua cillum in consequat.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
-        
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/lamp-600.jpg" 
-                                        srcset="images/thumbs/masonry/lamp-600.jpg 1x, images/thumbs/masonry/lamp-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Design</a>
-                                            <a href="#">Photography</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Shikamaru Narra</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">Symmetry In Modern Design.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Praesentium vel similique laboriosam repudiandae mollitia error. Inventore numquam occaecati omnis beatae fugiat. 
-                                    Porro sed numquam doloribus dolores exercitationem recusandae culpa. Sint vel vel quia quis. Non velit eum ea 
-                                    tempora quas sapiente.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
-
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/clock-600.jpg" 
-                                        srcset="images/thumbs/masonry/clock-600.jpg 1x, images/thumbs/masonry/clock-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Lifestyle</a>
-                                            <a href="#">Work</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Sasuke Uchiha</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">10 Tips for Managing Time Effectively.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Lorem ipsum Sed eiusmod esse aliqua sed incididunt aliqua incididunt mollit id et sit proident dolor nulla 
-                                    sed commodo est ad minim elit reprehenderit nisi officia aute incididunt velit sint in aliqua cillum in anim.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
-
-                        
-
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/phone-and-keyboard-600.jpg" 
-                                        srcset="images/thumbs/masonry/phone-and-keyboard-600.jpg 1x, images/thumbs/masonry/phone-and-keyboard-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="https://www.dreamhost.com/r.cgi?287326">Dreamhost</a>
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">StyleShout</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="https://www.dreamhost.com/r.cgi?287326">Need Web Hosting for Your Websites?</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Need hosting? We would highly recommend DreamHost.
-                                    Enjoy 100% in-house support, guaranteed performance and uptime, 1-click installs, and a super-intuitive control 
-                                    panel to make managing your websites and projects easy.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="https://www.dreamhost.com/r.cgi?287326">Learn More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
-
-                        <article class="brick entry" data-animate-el>
-        
-                            <div class="entry__thumb">
-                                <a href="single-standard.html" class="thumb-link">
-                                    <img src="images/thumbs/masonry/wheel-600.jpg" 
-                                        srcset="images/thumbs/masonry/wheel-600.jpg 1x, images/thumbs/masonry/wheel-1200.jpg 2x" alt="">
-                                </a>
-                            </div> <!-- end entry__thumb -->
-        
-                            <div class="entry__text">
-                                <div class="entry__header">
-                                    <div class="entry__meta">
-                                        <span class="cat-links">
-                                            <a href="#">Photography</a> 
-                                        </span>
-                                        <span class="byline">
-                                            By:
-                                            <a href="#0">Naruto Uzumaki</a>
-                                        </span>
-                                    </div>
-                                    <h1 class="entry__title"><a href="single-standard.html">Black And White Photography Tips.</a></h1>
-                                </div>
-                                <div class="entry__excerpt">
-                                    <p>
-                                    Voluptatem maiores aut delectus accusamus et explicabo et. Enim sunt quo odio sit. Hic consequatur et quia voluptas saepe. 
-                                    Vel nostrum incidunt ab eum distinctio recusandae. Labore dolore consequatur occaecati iste ex consectetur et perferendis.
-                                    </p>
-                                </div>
-                                <a class="entry__more-link" href="#0">Read More</a>
-                            </div> <!-- end entry__text -->
-                        
-                        </article> <!-- end article -->
+                                </article>
+                                <?php
+                            }
+                        } else {
+                            echo "<p>Belum ada artikel.</p>";
+                        }
+                        ?>
 
                     </div> <!-- end bricks-wrapper -->
 
@@ -627,36 +223,46 @@
 
                 <!-- pagination -->
                 <div class="row pagination">
-                    <div class="column lg-12">
-                        <nav class="pgn">
-                            <ul>
-                                <li>
-                                    <a class="pgn__prev" href="#0">
-                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
-                                        </svg>
-                                    </a>
-                                </li>
-                                <li><a class="pgn__num" href="#0">1</a></li>
-                                <li><span class="pgn__num current">2</span></li>
-                                <li><a class="pgn__num" href="#0">3</a></li>
-                                <li><a class="pgn__num" href="#0">4</a></li>
-                                <li><a class="pgn__num" href="#0">5</a></li>
-                                <li><span class="pgn__num dots">…</span></li>
-                                <li><a class="pgn__num" href="#0">8</a></li>
-                                <li>
-                                    <a class="pgn__next" href="#0">
-                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"></path>
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 12H4.75"></path>
-                                        </svg>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav> <!-- end pgn -->
-                    </div> <!-- end column -->
-                </div> <!-- end pagination -->
+                <div class="column lg-12">
+                    <nav class="pgn">
+                        <ul>
+                            <!-- Tombol Prev -->
+                            <?php if ($page > 1): ?>
+                            <li>
+                                <a class="pgn__prev" href="?page=<?= $page - 1 ?>">
+                                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+                                    </svg>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+
+                            <!-- Tombol Angka -->
+                            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                <?php if ($i == $page): ?>
+                                    <li><span class="pgn__num current"><?= $i ?></span></li>
+                                <?php else: ?>
+                                    <li><a class="pgn__num" href="?page=<?= $i ?>"><?= $i ?></a></li>
+                                <?php endif; ?>
+                            <?php endfor; ?>
+
+                            <!-- Tombol Next -->
+                            <?php if ($page < $totalPages): ?>
+                            <li>
+                                <a class="pgn__next" href="?page=<?= $page + 1 ?>">
+                                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.75 6.75L19.25 12L13.75 17.25"></path>
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 12H4.75"></path>
+                                    </svg>
+                                </a>
+                            </li>
+                            <?php endif; ?>
+                        </ul>
+                    </nav>
+                </div>
+                </div>
+
 
             </div> <!-- end bricks -->
 
@@ -669,14 +275,12 @@
             <div class="row s-footer__main">
 
                 <div class="column lg-5 md-6 tab-12 s-footer__about">
-                    <h4>Spurgeon</h4>
+                    <h4>Tentang Kami</h4>
 
                     <p>
-                    Lorem ipsum dolor sit amet, consectetur 
-                    adipiscing elit, sed do eiusmod tempor 
-                    incididunt ut labore et dolore magna aliqua. 
-                    Ut enim ad minim veniam, quis nostrud exercitation 
-                    ullamco laboris nisi ut aliquip ex ea commodo 
+                    Ruangku adalah ruang digital tempat berbagai pemikiran, cerita, 
+                    dan inspirasi dibagikan dengan hangat. Dari opini ringan hingga 
+                    tulisan reflektif — semuanya untuk kamu.
                     </p>
                 </div> <!-- end s-footer__about -->
 
@@ -697,11 +301,8 @@
                             <h4>Site Links</h4>
                             <ul class="link-list">
                                 <li><a href="index.html">Home</a></li>
-                                <li><a href="category.html">Categories</a></li>
-                                <li><a href="category.html">Blog</a></li>
                                 <li><a href="about.html">About</a></li>
                                 <li><a href="about.html">Contact</a></li>
-                                <li><a href="#0">Terms & Policy</a></li>
                             </ul>
                         </div>
                     </div>

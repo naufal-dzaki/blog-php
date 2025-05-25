@@ -121,7 +121,6 @@
 
   <script src=".././js/sidebarmenu.js"></script>
   <script src=".././js/app.min.js"></script>
-  <script src=".././libs/apexcharts/dist/apexcharts.min.js"></script>
   <script src=".././libs/simplebar/dist/simplebar.js"></script>
   <script src=".././js/dashboard.js"></script>
   

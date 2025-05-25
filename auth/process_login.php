@@ -14,9 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($row = mysqli_fetch_assoc($result)) {
         if (password_verify($password, $row['password'])) {
-            // Login berhasil
-            $_SESSION["user_id"] = $row["id"];
-            $_SESSION["email"] = $row["email"]; // atau $row["email"]
+            $_SESSION["user_id"] = $row["user_id"];
+            $_SESSION["email"] = $row["email"];
             header("Location: ../dashboard/index.php");
             exit;
         } else {

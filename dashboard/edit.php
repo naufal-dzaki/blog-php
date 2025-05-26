@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $image = $current_image;
     
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        $target_dir = "uploads/";
+        $target_dir = "../uploads/";
         if (!file_exists($target_dir)) {
             mkdir($target_dir, 0777, true);
         }

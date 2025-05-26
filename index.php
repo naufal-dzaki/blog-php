@@ -10,7 +10,7 @@
     ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Spurgeon</title>
+    <title>Ruangku.</title>
 
     <script>
         document.documentElement.classList.remove('no-js');
@@ -127,7 +127,7 @@
                 <div class="swiper-wrapper">
                 <?php while ($row = mysqli_fetch_assoc($result_hero)): ?>
                 <article class="hero__slide swiper-slide">
-                    <div class="hero__entry-image" style="background-image: url('uploads/<?= htmlspecialchars($row['image']) ?>');"></div>
+                    <div class="hero__entry-image" style="background-image: url('./uploads/<?= htmlspecialchars($row['image']) ?>');"></div>
                     <div class="hero__entry-text">
                         <div class="hero__entry-text-inner">
                             <div class="hero__entry-meta">
@@ -193,7 +193,7 @@
                                 <article class="brick entry" data-animate-el>
                                     <div class="entry__thumb">
                                         <a href="single-standard.php?id=<?= $row['id'] ?>" class="thumb-link">
-                                            <img src="uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['title']) ?>">
+                                            <img src="./uploads/<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['title']) ?>">
                                         </a>
                                     </div>
                                     <div class="entry__text">
@@ -287,17 +287,6 @@
                 <div class="column lg-5 md-6 tab-12">
                     <div class="row">
                         <div class="column lg-6">
-                            <h4>Categories</h4>
-                            <ul class="link-list">
-                                <li><a href="category.html">Lifestyle</a></li>
-                                <li><a href="category.html">Workplace</a></li>
-                                <li><a href="category.html">Inspiration</a></li>
-                                <li><a href="category.html">Design</a></li>
-                                <li><a href="category.html">Health</a></li>
-                                <li><a href="category.html">Photography</a></li>
-                            </ul>
-                        </div>
-                        <div class="column lg-6">
                             <h4>Site Links</h4>
                             <ul class="link-list">
                                 <li><a href="index.html">Home</a></li>
@@ -342,8 +331,7 @@
                 </div>
                 <div class="column lg-5 md-6 tab-12">
                     <div class="ss-copyright">
-                        <span>© Copyright Spurgeon 2021</span> 
-                        <span>Design by <a href="https://www.styleshout.com/">StyleShout</a> Distribution <a href="https://themewagon.com">ThemeWagon</a></span>
+                        <span>© Copyright Ruangku 2025</span> 
                     </div>
                 </div>
 

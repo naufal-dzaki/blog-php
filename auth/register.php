@@ -19,10 +19,9 @@
           <div class="col-md-8 col-lg-6 col-xxl-3">
             <div class="card mb-0">
               <div class="card-body">
-                <a href="../index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../images/logos/logo.svg" alt="">
+                <a href="../index.php" class="text-nowrap logo-img text-center d-block py-3 w-100">
+                  <p style="font-size: 24px; font-weight: bold;">Ruangku</p>
                 </a>
-                <p class="text-center">Your Social Campaigns</p>
                 <form action="./process_register.php" method="POST">
                   <div class="mb-3">
                     <label for="name" class="form-label">Username</label>

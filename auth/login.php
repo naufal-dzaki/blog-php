@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flexy Free Bootstrap Admin Template by WrapPixel</title>
   <link rel="stylesheet" href="../css/styles.min.css" />
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
 
 <body>
@@ -20,9 +21,8 @@
             <div class="card mb-0">
               <div class="card-body">
                 <a href="../index.php" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                  <img src="../images/logos/logo.svg" alt="">
+                  <p style="font-size: 24px; font-weight: bold;">Ruangku</p>
                 </a>
-                <p class="text-center">Your Social Campaigns</p>
                 <form action="process_login.php" method="POST">
                   <div class="mb-3">
                     <label for="email" class="form-label">Email</label>

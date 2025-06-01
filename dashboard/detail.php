@@ -75,6 +75,17 @@ if (!$article) {
                             </div>
                             </a>
                         </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link justify-content-between"  
+                            href="#">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="round-16 d-flex align-items-center justify-content-center">
+                                <i class="ti ti-logout"></i>
+                                </div>
+                                <a class="hide-menu" href="../auth/logout.php">Logout</a>
+                            </div>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

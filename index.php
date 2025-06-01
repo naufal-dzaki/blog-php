@@ -71,6 +71,7 @@
                         <li class="current-menu-item"><a href="index.php" title="">Home</a></li>
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
+                        <li><a href="auth/login.php" title="">Login/Register</a></li>
                     </ul> <!-- end s-header__nav -->
 
                 </nav> <!-- end s-header__nav-wrap -->

@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $password = '';
-$database = 'pemwebfp';
+$database = 'blog_pemweb';
 
 $koneksi = mysqli_connect($host, $user, $password, $database);
 

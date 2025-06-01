@@ -114,14 +114,14 @@ include 'includes/db.php';
                                 ?>
                                 <article class="brick entry">
                                     <div class="entry__thumb">
-                                        <a href="single-standard.php?id=<?= $row['id'] ?>" class="thumb-link" title="">
+                                        <a href="detail.php?id=<?= $row['id'] ?>" class="thumb-link" title="">
                                             <img src="uploads/<?= htmlspecialchars($row['image']) ?>" alt="">
                                         </a>
                                     </div>
                                     <div class="entry__text">
                                         <div class="entry__header">
                                             <h1 class="entry__title">
-                                                <a href="single-standard.php?id=<?= $row['id'] ?>">
+                                                <a href="detail.php?id=<?= $row['id'] ?>">
                                                     <?= htmlspecialchars($row['title']) ?>
                                                 </a>
                                             </h1>
@@ -130,7 +130,9 @@ include 'includes/db.php';
                                             </div>
                                         </div>
                                         <div class="entry__excerpt">
-                                            <p><?= htmlspecialchars(substr($row['content'], 0, 100)) ?>...</p>
+                                            <p>
+                                                <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
+                                            </p>
                                         </div>
                                     </div>
                                 </article>

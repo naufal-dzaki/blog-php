@@ -1,3 +1,21 @@
+<?php
+    include 'includes/db.php';
+
+    $id = $_GET['id'] ?? 0;
+    $article = null;
+
+    if ($id) {
+        $query = "SELECT * FROM articles WHERE id = " . intval($id);
+        $result = mysqli_query($koneksi, $query);
+        $article = mysqli_fetch_assoc($result);
+    }
+
+    if (!$article) {
+        echo "<script>alert('Artikel tidak ditemukan!'); window.location.href = 'index.php';</script>";
+        exit;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="no-js" >
 <head>
@@ -6,7 +24,7 @@
     ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>About - Ruangku</title>
+    <title>Standard Post - Spurgeon</title>
 
     <script>
         document.documentElement.classList.remove('no-js');
@@ -64,7 +82,7 @@
     
                     <ul class="s-header__nav">
                         <li><a href="index.php" title="">Home</a></li>
-                        <li class="current-menu-item"><a href="about.html" title="">About</a></li>
+                        <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
                         <li><a href="auth/login.php" title="">Login/Register</a></li>
                     </ul> <!-- end s-header__nav -->
@@ -78,12 +96,11 @@
                 <div class="s-header__search-inner">
                     <div class="row">
     
-                        <form role="search" method="get" class="s-header__search-form" action="#">
+                        <form id="searchForm" class="s-header__search-form" action="search.php" method="GET">
                             <label>
-                                <span class="u-screen-reader-text">Search for:</span>
-                                <input type="search" class="s-header__search-field" placeholder="Search for..." value="" name="s" title="Search for:" autocomplete="off">
+                                <input type="search" id="searchInput" name="s" class="s-header__search-field" placeholder="Search for..." autocomplete="off">
                             </label>
-                            <input type="submit" class="s-header__search-submit" value="Search"> 
+                            <input type="submit" class="s-header__search-submit" value="Search">
                         </form>
     
                         <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
@@ -105,57 +122,56 @@
 
         <!-- # site-content
         ================================================== -->
-        <div id="content" class="s-content s-content--page">
+        <div id="content" class="s-content s-content--blog">
 
                 <div class="row entry-wrap">
                     <div class="column lg-12">
 
-                        <article class="entry">
+                        <article class="entry format-standard">
 
-                            <header class="entry__header entry__header--narrow">
+                            <header class="entry__header">
     
                                 <h1 class="entry__title">
-                                    Kenali Lebih Dekat Ruangku
+                                    <?php echo htmlspecialchars($article['title']); ?>
                                 </h1>
-    
+
+                                <div class="entry__meta">
+                                    <div class="entry__meta-author">
+                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="8" r="3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></circle>
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6.8475 19.25H17.1525C18.2944 19.25 19.174 18.2681 18.6408 17.2584C17.8563 15.7731 16.068 14 12 14C7.93201 14 6.14367 15.7731 5.35924 17.2584C4.82597 18.2681 5.70558 19.25 6.8475 19.25Z"></path>
+                                        </svg>
+                                        <a href="#">Naruto Uzumaki</a> 
+                                    </div>
+                                    <div class="entry__meta-date">
+                                        <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="7.25" stroke="currentColor" stroke-width="1.5"></circle>
+                                            <path stroke="currentColor" stroke-width="1.5" d="M12 8V12L14 14"></path>
+                                        </svg>
+                                        <?php echo date('d F Y, H:i', strtotime($article['created_at'])); ?>
+                                    </div>
+                                </div>
                             </header>
 
                             <div class="entry__media">
-                                <figure class="featured-image">
-                                    <img src="images/thumbs/about/about-1200.jpg" 
-                                      srcset="images/thumbs/about/about-2400.jpg 2400w, 
-                                              images/thumbs/about/about-1200.jpg 1200w, 
-                                              images/thumbs/about/about-600.jpg 600w" sizes="(max-width: 2400px) 100vw, 2400px" alt="">
-                                </figure>
+                                    <?php if ($article['image']): ?>
+                                        <div class="text-center mb-4">
+                                            <img src="uploads/<?php echo htmlspecialchars($article['image']); ?>" 
+                                                alt="<?php echo htmlspecialchars($article['title']); ?>" 
+                                                class="article-image">
+                                        </div>
+                                    <?php endif; ?>
                             </div>
 
                             <div class="content-primary">
 
-                                <div class="entry__content">
-        
-                                    <p class="lead">
-                                    Ruangku adalah sebuah platform sistem manajemen konten (CMS) modern yang dirancang khusus untuk memudahkan siapa saja dalam mengelola artikel, blog pribadi, hingga situs berita skala besar. Kami hadir dengan misi menyediakan ruang digital yang efisien, fleksibel, dan aman bagi para kreator konten, penulis, dan organisasi media untuk menyebarkan informasi yang bermakna.</p> 
-
-                                    <div class="row block-lg-one-half block-tab-whole">
-                                        <div class="column">
-                                            <p class="drop-cap">
-                                                Ruangku dibangun dari kebutuhan nyata para penulis dan jurnalis digital yang membutuhkan tempat untuk menyalurkan karya mereka tanpa hambatan teknis. Dengan antarmuka yang intuitif dan fitur-fitur lengkap seperti pengelolaan artikel, kategori, penjadwalan publikasi, dan sistem kolaborasi tim, Ruangku membuat proses pembuatan konten menjadi lebih terorganisir dan produktif.
-                                                </p>
-                                        </div>
-                                        <div class="column">
-                                            <p>
-                                                Apakah Anda seorang blogger independen atau tim redaksi media digital, Ruangku dirancang agar dapat berkembang bersama kebutuhan Anda. Dari pengaturan tema yang dinamis, integrasi SEO, hingga sistem multi-penulis, kami memastikan Anda mendapatkan kontrol penuh atas platform Anda. Di Ruangku, Anda fokus menulis—kami urus sisanya.
-                                                </p>
-                                        </div>
-                                    </div>
+                                <?php echo $article['content']; ?>
 
                             </div> <!-- end content-primary -->
 
                         </article> <!-- end entry -->
-
                     </div>
                 </div> <!-- end entry-wrap -->
-
         </section> <!-- end s-content -->
 
 

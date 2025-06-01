@@ -137,14 +137,16 @@
                                 </span>
                             </div>
                             <h2 class="hero__entry-title">
-                                <a href="single-standard.php?id=<?= $row['id'] ?>">
+                                <a href="detail.php?id=<?= $row['id'] ?>">
                                     <?= htmlspecialchars($row['title']) ?>
                                 </a>
                             </h2>
-                            <p class="hero__entry-desc">
-                                <?= htmlspecialchars(substr($row['content'], 0, 150)) ?>...
-                            </p>
-                            <a class="hero__more-link" href="single-standard.php?id=<?= $row['id'] ?>">Read More</a>
+                            <div class="entry__excerpt">
+                                <p>
+                                    <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
+                                </p>
+                            </div>
+                            <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                         </div>
                     </div>
                 </article>
@@ -202,12 +204,14 @@
                                             <div class="entry__meta">
                                                 <span class="byline">By: <a href="#"><?= htmlspecialchars($row['author_name']) ?></a></span>
                                             </div>
-                                            <h1 class="entry__title"><a href="single-standard.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['title']) ?></a></h1>
+                                            <h1 class="entry__title"><a href="detail.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['title']) ?></a></h1>
                                         </div>
                                         <div class="entry__excerpt">
-                                            <p><?= htmlspecialchars(substr($row['content'], 0, 150)) ?>...</p>
+                                            <p>
+                                                <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
+                                            </p>
                                         </div>
-                                        <a class="entry__more-link" href="single-standard.php?id=<?= $row['id'] ?>">Read More</a>
+                                        <a class="entry__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                                     </div>
                                 </article>
                                 <?php

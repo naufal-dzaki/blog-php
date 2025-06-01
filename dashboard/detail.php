@@ -26,6 +26,7 @@ if (!$article) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href=".././css/styles.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
     <style>
         .article-image {
             max-width: 100%;
@@ -127,7 +128,7 @@ if (!$article) {
                                 </header>
                                 
                                 <div class="article-content">
-                                    <?php echo nl2br(htmlspecialchars($article['content'])); ?>
+                                    <?php echo $article['content']; ?>
                                 </div>
                             </article>
                             

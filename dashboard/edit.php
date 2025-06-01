@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href=".././css/styles.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 </head>
 <body class="bg-light">
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical">
@@ -170,8 +171,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="content" class="form-label">Konten Artikel</label>
-                                    <textarea class="form-control" id="content" name="content" rows="10" required><?php echo htmlspecialchars($article['content']); ?></textarea>
+                                    <label for="editor" class="form-label">Konten Artikel</label>
+                                    <div id="editor" style="height: 300px;"><?php echo $article['content']; ?></div>
+                                    <input type="hidden" name="content" id="content">
                                 </div>
                                 
                                 <div class="mb-3">
@@ -216,7 +218,50 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <script src=".././libs/simplebar/dist/simplebar.js"></script>
   <script src=".././js/dashboard.js"></script>
   
-  <!-- Solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+  
+  <script>
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        placeholder: 'Tulis konten artikel di sini...',
+        modules: {
+        toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            ['code-block'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            ['link']
+        ]
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function () {
+        const html = quill.root.innerHTML;
+        document.querySelector('#content').value = html;
+    });
+
+    quill.root.addEventListener('drop', function(e) {
+        e.preventDefault();
+    });
+
+    quill.root.addEventListener('paste', function(e) {
+        const clipboardData = e.clipboardData || window.clipboardData;
+        if (clipboardData && clipboardData.items) {
+        for (let i = 0; i < clipboardData.items.length; i++) {
+            if (clipboardData.items[i].type.indexOf('image') !== -1) {
+            e.preventDefault();
+            return;
+            }
+        }
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function() {
+        document.querySelector('#content').value = quill.root.innerHTML;
+    });
+  </script>
 </body>
 </html>

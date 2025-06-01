@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Flexy Free Bootstrap Admin Template by WrapPixel</title>
+  <title>Ruangku. | Login</title>
   <link rel="stylesheet" href="../css/styles.min.css" />
   <link rel="stylesheet" href="../css/style.css" />
 </head>
@@ -34,8 +34,8 @@
                   </div>
                   <input type="submit" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" value="Sign In">
                   <div class="d-flex align-items-center justify-content-center">
-                    <p class="fs-4 mb-0 fw-bold">New to MaterialM?</p>
-                    <a class="text-primary fw-bold ms-2" href="./authentication-register.html">Create an account</a>
+                    <p class="fs-4 mb-0 fw-bold">Belum punya akun?</p>
+                    <a class="text-primary fw-bold ms-2" href="./register.php">Buat akun</a>
                   </div>
                 </form>
               </div>

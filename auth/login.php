@@ -37,6 +37,11 @@
                     <p class="fs-4 mb-0 fw-bold">Belum punya akun?</p>
                     <a class="text-primary fw-bold ms-2" href="./register.php">Buat akun</a>
                   </div>
+                  <div style="text-align: center; margin-top: 1rem;">
+                      <button type="button" onclick="goBack()" style="background: none; border: none; color: #007BFF; cursor: pointer;">
+                          ← Kembali ke halaman sebelumnya
+                      </button>
+                  </div>
                 </form>
               </div>
             </div>
@@ -49,6 +54,14 @@
   <script src="../libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <!-- solar icons -->
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+  <script>
+    function goBack() {
+        if (document.referrer !== "") {
+            window.location.href = document.referrer;
+        } else {
+            window.history.back();
+        }
+    }
+  </script>
 </body>
-
 </html>

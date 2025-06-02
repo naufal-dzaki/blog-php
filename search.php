@@ -1,5 +1,28 @@
 <?php
-include 'includes/db.php';
+    include 'includes/db.php';
+
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+    $limit = 6;
+    $offset = ($page - 1) * $limit;
+    $keyword = mysqli_real_escape_string($koneksi, $_GET['s'] ?? '');
+
+    // Hitung total hasil
+    $countQuery = "SELECT COUNT(*) AS total 
+                FROM articles 
+                JOIN users ON articles.user_id = users.user_id 
+                WHERE articles.title LIKE '%$keyword%' OR users.username LIKE '%$keyword%'";
+    $countResult = mysqli_query($koneksi, $countQuery);
+    $totalArticles = mysqli_fetch_assoc($countResult)['total'];
+    $totalPages = ceil($totalArticles / $limit);
+
+    // Ambil data artikel sesuai pencarian
+    $query = "SELECT articles.*, users.username AS author_name 
+            FROM articles 
+            JOIN users ON articles.user_id = users.user_id 
+            WHERE articles.title LIKE '%$keyword%' OR users.username LIKE '%$keyword%' 
+            ORDER BY created_at DESC 
+            LIMIT $limit OFFSET $offset";
+    $result = mysqli_query($koneksi, $query);
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +91,7 @@ include 'includes/db.php';
                     <h3 class="s-header__nav-heading">Navigate to</h3>
     
                     <ul class="s-header__nav">
-                        <li class="current-menu-item"><a href="index.php" title="">Home</a></li>
+                        <li><a href="index.php" title="">Home</a></li>
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
                         <li><a href="auth/login.php" title="">Login/Register</a></li>
@@ -78,9 +101,30 @@ include 'includes/db.php';
     
             </div> <!-- end s-header__navigation -->
 
-            
+            <?php $keyword = $_GET['s'] ?? ''; ?>
+
+            <div class="s-header__search">
+                <div class="s-header__search-inner">
+                    <div class="row">
+                        <form id="searchForm" class="s-header__search-form" action="search.php" method="GET">
+                            <label>
+                                <input type="search" id="searchInput" name="s" class="s-header__search-field"
+                                    placeholder="Search for..." value="<?= htmlspecialchars($keyword) ?>" autocomplete="off">
+                            </label>
+                            <input type="submit" class="s-header__search-submit" value="Search">
+                        </form>
+                        <a href="index.php" title="Close Search" class="s-header__search-close">Close</a>
+                    </div>
+                </div>
+            </div>
+
 
             <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+            <a class="s-header__search-trigger" href="#">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 19.25L15.5 15.5M4.75 11C4.75 7.54822 7.54822 4.75 11 4.75C14.4518 4.75 17.25 7.54822 17.25 11C17.25 14.4518 14.4518 17.25 11 17.25C7.54822 17.25 4.75 14.4518 4.75 11Z"></path>
+                </svg>
+            </a>
 
         </header> <!-- end s-header -->
 
@@ -91,30 +135,18 @@ include 'includes/db.php';
 
             <!--  masonry -->
             <div id="bricks" class="bricks">
-
+            
                 <div class="masonry">
 
                     <div class="bricks-wrapper" data-animate-block>
 
                         <div class="grid-sizer"></div>
-
-                        <?php
-                        $search = mysqli_real_escape_string($koneksi, $_GET['s']);
-
-                        $query = "SELECT articles.*, users.username AS author_name 
-                                FROM articles 
-                                JOIN users ON articles.user_id = users.user_id 
-                                WHERE articles.title LIKE '%$search%' OR users.username LIKE '%$search%' 
-                                ORDER BY created_at DESC";
-
-                        $result = mysqli_query($koneksi, $query);
-
-                        if (mysqli_num_rows($result) > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                ?>
+                        <!-- Loop Artikel -->
+                        <?php if (mysqli_num_rows($result) > 0): ?>
+                            <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <article class="brick entry">
                                     <div class="entry__thumb">
-                                        <a href="detail.php?id=<?= $row['id'] ?>" class="thumb-link" title="">
+                                        <a href="detail.php?id=<?= $row['id'] ?>" class="thumb-link">
                                             <img src="uploads/<?= htmlspecialchars($row['image']) ?>" alt="">
                                         </a>
                                     </div>
@@ -130,18 +162,14 @@ include 'includes/db.php';
                                             </div>
                                         </div>
                                         <div class="entry__excerpt">
-                                            <p>
-                                                <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
-                                            </p>
+                                            <p><?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...</p>
                                         </div>
                                     </div>
                                 </article>
-                                <?php
-                            }
-                        } else {
-                            echo "<p>Tidak ada artikel ditemukan.</p>";
-                        }
-                        ?>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <p>Tidak ada artikel ditemukan untuk <strong><?= htmlspecialchars($keyword) ?></strong>.</p>
+                        <?php endif; ?>
 
                     </div> <!-- end bricks-wrapper -->
 
@@ -149,8 +177,31 @@ include 'includes/db.php';
 
 
                 <!-- pagination -->
-                
+                <?php if ($totalPages > 1): ?>
+                <div class="row pagination">
+                    <div class="column lg-12">
+                        <nav class="pgn">
+                            <ul>
+                                <?php if ($page > 1): ?>
+                                <li><a class="pgn__prev" href="?s=<?= urlencode($keyword) ?>&page=<?= $page - 1 ?>">←</a></li>
+                                <?php endif; ?>
 
+                                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                                    <?php if ($i == $page): ?>
+                                        <li><span class="pgn__num current"><?= $i ?></span></li>
+                                    <?php else: ?>
+                                        <li><a class="pgn__num" href="?s=<?= urlencode($keyword) ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                    <?php endif; ?>
+                                <?php endfor; ?>
+
+                                <?php if ($page < $totalPages): ?>
+                                <li><a class="pgn__next" href="?s=<?= urlencode($keyword) ?>&page=<?= $page + 1 ?>" style="color : black">→</a></li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <?php endif; ?>
 
             </div> <!-- end bricks -->
 
@@ -241,6 +292,6 @@ include 'includes/db.php';
     ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
-
+    
 </body>
 </html>

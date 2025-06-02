@@ -133,7 +133,7 @@
                         <div class="hero__entry-text-inner">
                             <div class="hero__entry-meta">
                                 <span class="cat-links">
-                                    <a href="#"><?= htmlspecialchars($row['author_name']) ?></a>
+                                    <a href="detail.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['author_name']) ?></a>
                                 </span>
                             </div>
                             <h2 class="hero__entry-title">
@@ -144,7 +144,7 @@
                             <div class="entry__excerpt">
                                 <p>
                                     <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
-                                </p>
+                                </p>
                             </div>
                             <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                         </div>

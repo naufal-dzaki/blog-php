@@ -23,6 +23,11 @@
                 <a href="../index.php" class="text-nowrap logo-img text-center d-block py-3 w-100">
                   <p style="font-size: 24px; font-weight: bold;">Ruangku</p>
                 </a>
+                <?php if (isset($_GET['error'])): ?>
+                  <div class="alert alert-danger text-center">
+                    <?= htmlspecialchars($_GET['error']) ?>
+                  </div>
+                <?php endif; ?>
                 <form action="process_login.php" method="POST">
                   <div class="mb-3">
                     <label for="email" class="form-label">Email</label>

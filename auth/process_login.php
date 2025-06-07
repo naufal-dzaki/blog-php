@@ -19,10 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../dashboard/index.php");
             exit;
         } else {
-            echo "Password salah.";
+            header("Location: login.php?error=Email+atau+kata+sandi+yang+Anda+masukkan+tidak+valid.");
+            exit;
         }
     } else {
-        echo "Email tidak ditemukan.";
+        header("Location: login.php?error=Email+atau+kata+sandi+yang+Anda+masukkan+tidak+valid.");
+        exit;
     }
 } else {
     echo "Akses tidak valid.";

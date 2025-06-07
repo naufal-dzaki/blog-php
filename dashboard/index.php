@@ -105,10 +105,17 @@
           type: 'GET',
           dataSrc: 'data'
         },
-        columns: [
-          { data: 0, title: "ID" },
+        columns: [{
+            data: null,
+            title: "No",
+            orderable: false,
+            searchable: false,
+            render: function (data, type, row, meta) {
+              return meta.row + 1;
+            }
+          },
           { data: 1, title: "Judul" },
-          { data: 2, title: "Tanggal Dibuat" },
+          { data: 2, title: "Tanggal Dibuat", },
           { data: 3, title: "Tanggal Diupdate" },
           { data: 4, title: "Aksi", orderable: false, searchable: false }
         ],

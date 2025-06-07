@@ -2,6 +2,22 @@
 session_start();
 include './db.php';
 
+function formatTanggalIndo($datetime) {
+    $bulan = [
+        1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+        'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    ];
+
+    $timestamp = strtotime($datetime);
+    $tgl = date('j', $timestamp);
+    $bln = $bulan[(int)date('n', $timestamp)];
+    $thn = date('Y', $timestamp);
+    $jam = date('H:i', $timestamp);
+
+    return "$tgl $bln $thn, $jam";
+}
+
+
 if (!isset($_SESSION['user_id'])) {
     http_response_code(403);
     echo json_encode(['error' => 'Unauthorized']);
@@ -18,8 +34,9 @@ $result = mysqli_stmt_get_result($stmt);
 
 $data = [];
 while ($row = mysqli_fetch_assoc($result)) {
-    $created_date = date('d/m/Y H:i', strtotime($row['created_at']));
-    $updated_date = $row['updated_at'] ? date('d/m/Y H:i', strtotime($row['updated_at'])) : '-';
+    $created_date = formatTanggalIndo($row['created_at']);
+    $updated_date = $row['updated_at'] ? formatTanggalIndo($row['updated_at']) : '-';
+
     
     $actions = '
         <div class="btn-group" role="group">

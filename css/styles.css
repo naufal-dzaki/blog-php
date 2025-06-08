@@ -88,6 +88,14 @@
     --font-mono : Consolas, "Andale Mono", Courier, "Courier New", monospace;
 }
 
+.swiper-pagination-vertical {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
 /* ------------------------------------------------------------------- 
  * ## colors
  * ------------------------------------------------------------------- */

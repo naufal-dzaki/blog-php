@@ -1,5 +1,13 @@
 <?php
     include 'includes/db.php';
+
+    $query = "SELECT articles.*, users.username 
+            FROM articles 
+            JOIN users ON articles.user_id = users.user_id 
+            ORDER BY articles.created_at DESC 
+            LIMIT 3";
+
+    $result = mysqli_query($koneksi, $query);
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +36,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 </head>
 
@@ -115,44 +127,32 @@
             <!-- hero -->
             <div class="hero">
             <div class="hero__slider swiper-container">
-                <?php
-                $query_hero = "SELECT articles.*, users.username AS author_name 
-                            FROM articles 
-                            JOIN users ON articles.user_id = users.user_id 
-                            ORDER BY created_at DESC 
-                            LIMIT 3";
-
-                $result_hero = mysqli_query($koneksi, $query_hero);
-                ?>
-
                 <div class="swiper-wrapper">
-                <?php while ($row = mysqli_fetch_assoc($result_hero)): ?>
-                <article class="hero__slide swiper-slide">
-                    <div class="hero__entry-image" style="background-image: url('./uploads/<?= htmlspecialchars($row['image']) ?>');"></div>
-                    <div class="hero__entry-text">
-                        <div class="hero__entry-text-inner">
-                            <div class="hero__entry-meta">
-                                <span class="cat-links">
-                                    <a href="detail.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['author_name']) ?></a>
-                                </span>
-                            </div>
-                            <h2 class="hero__entry-title">
-                                <a href="detail.php?id=<?= $row['id'] ?>">
-                                    <?= htmlspecialchars($row['title']) ?>
-                                </a>
-                            </h2>
-                            <div class="entry__excerpt">
-                                <p>
+                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                    <article class="hero__slide swiper-slide">
+                        <div class="hero__entry-image" style="background-image: url('uploads/<?= htmlspecialchars($row['image']) ?>');"></div>
+                        <div class="hero__entry-text">
+                            <div class="hero__entry-text-inner">
+                                <div class="hero__entry-meta">
+                                    <span class="cat-links">
+                                        <a href="#"><?= htmlspecialchars($row['username']) ?></a>
+                                    </span>
+                                </div>
+                                <h2 class="hero__entry-title">
+                                    <a href="detail.php?id=<?= $row['id'] ?>">
+                                        <?= htmlspecialchars($row['title']) ?>
+                                    </a>
+                                </h2>
+                                <p class="hero__entry-desc">
                                     <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
                                 </p>
+                                <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                             </div>
-                            <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                         </div>
-                    </div>
-                </article>
-                <?php endwhile; ?>
+                    </article>
+                    <?php endwhile; ?>
                 </div>
-                <div class="swiper-pagination"></div>
+                <div class="swiper-pagination swiper-pagination-vertical"></div>
             </div>
             </div>
             <!-- end hero -->
@@ -294,9 +294,9 @@
                         <div class="column lg-6">
                             <h4>Site Links</h4>
                             <ul class="link-list">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="index.php">Home</a></li>
                                 <li><a href="about.html">About</a></li>
-                                <li><a href="about.html">Contact</a></li>
+                                <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </div>
                     </div>

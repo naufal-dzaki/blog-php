@@ -184,6 +184,7 @@
 // Panggil saat halaman siap
 document.addEventListener("DOMContentLoaded", function () {
     ssSearch();
+    swiperInit();
 });
 
 
@@ -298,13 +299,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* hero-swipper
     * -------------------------------------------------- */
-    const swiperInit = function() {
+   const swiperInit = function () {
     const heroSlider = document.querySelector('.hero__slider');
-
     if (!heroSlider) return;
 
     const swiper = new Swiper('.hero__slider', {
         loop: true,
+        direction: 'horizontal',
         pagination: {
             el: '.swiper-pagination',
             clickable: true,
@@ -313,9 +314,11 @@ document.addEventListener("DOMContentLoaded", function () {
             delay: 5000,
             disableOnInteraction: false,
         },
-        effect: 'slide',
+        slidesPerView: 1,
+        spaceBetween: 0,
     });
 };
+
  //end hero-swipper
     
 
@@ -418,7 +421,6 @@ document.addEventListener("DOMContentLoaded", function () {
         ssMasonry();
         ssAnimateBricks();
         ssSwiper();
-        swiperInit();
         ssAlertBoxes();
         ssBackToTop();
         ssMoveTo();

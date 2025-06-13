@@ -1,13 +1,5 @@
 <?php
     include 'includes/db.php';
-
-    $query = "SELECT articles.*, users.username 
-            FROM articles 
-            JOIN users ON articles.user_id = users.user_id 
-            ORDER BY articles.created_at DESC 
-            LIMIT 3";
-
-    $result = mysqli_query($koneksi, $query);
 ?>
 
 <!DOCTYPE html>
@@ -125,35 +117,62 @@
 
 
             <!-- hero -->
+            <?php
+            $query = "SELECT articles.*, users.username 
+                    FROM articles 
+                    JOIN users ON articles.user_id = users.user_id 
+                    ORDER BY created_at DESC 
+                    LIMIT 3";
+
+            $result = mysqli_query($koneksi, $query);
+
+            function getImage($img) {
+                return !empty($img) ? 'uploads/' . htmlspecialchars($img) : 'images/thumbs/featured/default.jpg';
+            }
+
+            if (!$result) {
+                echo "<p>Query error: " . mysqli_error($koneksi) . "</p>";
+            }
+            ?>
+
             <div class="hero">
-            <div class="hero__slider swiper-container">
-                <div class="swiper-wrapper">
-                    <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                    <article class="hero__slide swiper-slide">
-                        <div class="hero__entry-image" style="background-image: url('uploads/<?= htmlspecialchars($row['image']) ?>');"></div>
-                        <div class="hero__entry-text">
-                            <div class="hero__entry-text-inner">
-                                <div class="hero__entry-meta">
-                                    <span class="cat-links">
-                                        <a href="#"><?= htmlspecialchars($row['username']) ?></a>
-                                    </span>
+                <div class="hero__slider swiper-container">
+                    <div class="swiper-wrapper">
+                        <?php 
+                        mysqli_data_seek($result, 0);
+                        while ($row = mysqli_fetch_assoc($result)): ?>
+                        <article class="hero__slide swiper-slide">
+                            <div class="hero__entry-image" style="background-image: url('<?= getImage($row['image']) ?>');"></div>
+                            <div class="hero__entry-text">
+                                <div class="hero__entry-text-inner">
+                                    <div class="hero__entry-meta">
+                                        <span class="cat-links">
+                                            <a href="detail.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['username']) ?></a>
+                                        </span>
+                                    </div>
+                                    <h2 class="hero__entry-title">
+                                        <a href="detail.php?id=<?= $row['id'] ?>">
+                                            <?= htmlspecialchars($row['title']) ?>
+                                        </a>
+                                    </h2>
+                                    <p class="hero__entry-desc">
+                                        <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
+                                    </p>
+                                    <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                                 </div>
-                                <h2 class="hero__entry-title">
-                                    <a href="detail.php?id=<?= $row['id'] ?>">
-                                        <?= htmlspecialchars($row['title']) ?>
-                                    </a>
-                                </h2>
-                                <p class="hero__entry-desc">
-                                    <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
-                                </p>
-                                <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                             </div>
-                        </div>
-                    </article>
-                    <?php endwhile; ?>
+                        </article>
+                        <?php endwhile; ?>
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
-                <div class="swiper-pagination swiper-pagination-vertical"></div>
-            </div>
+                <a href="#bricks" class="hero__scroll-down smoothscroll">
+                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.25 6.75L4.75 12L10.25 17.25"></path>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.25 12H5"></path>
+                    </svg>
+                    <span>Scroll</span>
+                </a>
             </div>
             <!-- end hero -->
 

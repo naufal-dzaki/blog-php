@@ -184,7 +184,6 @@
 // Panggil saat halaman siap
 document.addEventListener("DOMContentLoaded", function () {
     ssSearch();
-    swiperInit();
 });
 
 
@@ -299,25 +298,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /* hero-swipper
     * -------------------------------------------------- */
-   const swiperInit = function () {
-    const heroSlider = document.querySelector('.hero__slider');
-    if (!heroSlider) return;
-
-    const swiper = new Swiper('.hero__slider', {
-        loop: true,
-        direction: 'horizontal',
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false,
-        },
-        slidesPerView: 1,
-        spaceBetween: 0,
+    document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function() {
+        try {
+            const swiper = new Swiper('.hero__slider', {
+                init: false, 
+            });
+            
+            swiper.on('init', function() {
+                console.log('Swiper initialized with slides:', swiper.slides.length);
+            });
+            
+            swiper.init(); 
+            
+            setTimeout(() => {
+                swiper.update();
+                swiper.slideTo(0, 0);
+                console.log('Swiper updated');
+            }, 300);
+        } catch (e) {
+            console.error('Swiper error:', e);
+        }
+    }, 500);
     });
-};
+
 
  //end hero-swipper
     

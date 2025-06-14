@@ -1,3 +1,11 @@
+<?php 
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: ../dashboard/index.php");
+    exit;
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -10,7 +18,6 @@
 </head>
 
 <body>
-  <!--  Body Wrapper -->
   <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
     data-sidebar-position="fixed" data-header-position="fixed">
     <div

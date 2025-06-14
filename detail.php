@@ -23,9 +23,6 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" >
 <head>
-
-    <!--- basic page needs
-    ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Standard Post - Spurgeon</title>
@@ -50,10 +47,6 @@
 </head>
 
 <body id="top">
-
-
-    <!-- preloader
-    ================================================== -->
     <div id="preloader">
         <div id="loader" class="dots-fade">
             <div></div>
@@ -61,15 +54,7 @@
             <div></div>
         </div>
     </div>
-
-
-    <!-- page wrap
-    ================================================== -->
     <div id="page" class="s-pagewrap">
-
-
-        <!-- # site header 
-        ================================================== -->
         <header id="masthead" class="s-header">
 
             <div class="s-header__branding">
@@ -89,11 +74,11 @@
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
                         <li><a href="auth/login.php" title="">Login/Register</a></li>
-                    </ul> <!-- end s-header__nav -->
+                    </ul>
 
-                </nav> <!-- end s-header__nav-wrap -->
-    
-            </div> <!-- end s-header__navigation -->
+                </nav>
+
+            </div>
 
             <div class="s-header__search">
 
@@ -109,10 +94,10 @@
     
                         <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
     
-                    </div> <!-- end row -->
-                </div> <!-- s-header__search-inner -->
+                    </div>
+                </div>
     
-            </div> <!-- end s-header__search -->
+            </div>
 
             <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
             <a class="s-header__search-trigger" href="#">
@@ -121,11 +106,8 @@
                 </svg>
             </a>
 
-        </header> <!-- end s-header -->
+        </header>
 
-
-        <!-- # site-content
-        ================================================== -->
         <div id="content" class="s-content s-content--blog">
 
                 <div class="row entry-wrap">
@@ -171,16 +153,14 @@
 
                                 <?php echo $article['content']; ?>
 
-                            </div> <!-- end content-primary -->
+                            </div> 
 
-                        </article> <!-- end entry -->
+                        </article> 
                     </div>
-                </div> <!-- end entry-wrap -->
-        </section> <!-- end s-content -->
+                </div> 
+        </section> 
 
 
-        <!-- # site-footer
-        ================================================== -->
         <footer id="colophon" class="s-footer">
             <div class="row s-footer__main">
 
@@ -192,7 +172,7 @@
                     dan inspirasi dibagikan dengan hangat. Dari opini ringan hingga 
                     tulisan reflektif — semuanya untuk kamu.
                     </p>
-                </div> <!-- end s-footer__about -->
+                </div>
 
                 <div class="column lg-5 md-6 tab-12">
                     <div class="row">
@@ -207,7 +187,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end s-footer__main -->
+            </div>
 
             <div class="row s-footer__bottom">
 
@@ -245,7 +225,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end s-footer__bottom -->
+            </div>
            
             <div class="ss-go-top">
                 <a class="smoothscroll" title="Back to Top" href="#top">
@@ -254,13 +234,10 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19.25V5.75"/>
                     </svg>
                 </a>
-            </div> <!-- end ss-go-top -->
+            </div>
+        </footer>
 
-        </footer><!-- end s-footer -->
 
-
-    <!-- Java Script
-    ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 

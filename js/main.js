@@ -100,91 +100,91 @@
     /* search
     * ------------------------------------------------------ */
     const ssSearch = function() {
-    const searchWrap = document.querySelector('.s-header__search');
-    const searchTrigger = document.querySelector('.s-header__search-trigger');
-    const searchForm = document.getElementById("searchForm");
-    const searchInput = document.getElementById("searchInput");
-    const masonryContainer = document.getElementById("bricks-wrapper"); // pastikan ID ini ada di HTML
+        const searchWrap = document.querySelector('.s-header__search');
+        const searchTrigger = document.querySelector('.s-header__search-trigger');
+        const searchForm = document.getElementById("searchForm");
+        const searchInput = document.getElementById("searchInput");
+        const masonryContainer = document.getElementById("bricks-wrapper"); // pastikan ID ini ada di HTML
 
-    if (!(searchWrap && searchTrigger)) return;
+        if (!(searchWrap && searchTrigger)) return;
 
-    const searchField = searchWrap.querySelector('.s-header__search-field');
-    const closeSearch = searchWrap.querySelector('.s-header__search-close');
-    const siteBody = document.querySelector('body');
+        const searchField = searchWrap.querySelector('.s-header__search-field');
+        const closeSearch = searchWrap.querySelector('.s-header__search-close');
+        const siteBody = document.querySelector('body');
 
-    // buka search
-    searchTrigger.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        siteBody.classList.add('search-is-visible');
-
-        scrollLock.getScrollState()
-            ? scrollLock.disablePageScroll(searchWrap)
-            : scrollLock.enablePageScroll(searchWrap);
-
-        setTimeout(function() {
-            searchField.focus();
-        }, 100);
-    });
-
-    // tutup search
-    closeSearch.addEventListener('click', function(e) {
-        e.stopPropagation();
-        if (siteBody.classList.contains('search-is-visible')) {
-            siteBody.classList.remove('search-is-visible');
-            setTimeout(() => searchField.blur(), 100);
+        // buka search
+        searchTrigger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            siteBody.classList.add('search-is-visible');
 
             scrollLock.getScrollState()
                 ? scrollLock.disablePageScroll(searchWrap)
                 : scrollLock.enablePageScroll(searchWrap);
-        }
-    });
 
-    searchWrap.addEventListener('click', function(e) {
-        if (!e.target.matches('.s-header__search-inner')) {
-            closeSearch.dispatchEvent(new Event('click'));
-        }
-    });
+            setTimeout(function() {
+                searchField.focus();
+            }, 100);
+        });
 
-    searchField.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
+        // tutup search
+        closeSearch.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (siteBody.classList.contains('search-is-visible')) {
+                siteBody.classList.remove('search-is-visible');
+                setTimeout(() => searchField.blur(), 100);
 
-    searchField.setAttribute('placeholder', 'Search for...');
-    searchField.setAttribute('autocomplete', 'off');
-
-    // fitur search AJAX
-    if (searchForm && searchInput && masonryContainer) {
-        searchForm.addEventListener("submit", function(e) {
-            e.preventDefault();
-            const keyword = searchInput.value.trim();
-
-            if (keyword.length > 0) {
-                fetch(`search.php?s=${encodeURIComponent(keyword)}`)
-                    .then(response => response.text())
-                    .then(data => {
-                        masonryContainer.innerHTML = data;
-                        // reinitialize Masonry jika perlu
-                        if (typeof Masonry !== "undefined") {
-                            new Masonry(masonryContainer, {
-                                itemSelector: ".brick",
-                                columnWidth: ".brick",
-                                percentPosition: true
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Search error:", error);
-                    });
+                scrollLock.getScrollState()
+                    ? scrollLock.disablePageScroll(searchWrap)
+                    : scrollLock.enablePageScroll(searchWrap);
             }
         });
-    }
-};
 
-// Panggil saat halaman siap
-document.addEventListener("DOMContentLoaded", function () {
-    ssSearch();
-});
+        searchWrap.addEventListener('click', function(e) {
+            if (!e.target.matches('.s-header__search-inner')) {
+                closeSearch.dispatchEvent(new Event('click'));
+            }
+        });
+
+        searchField.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        searchField.setAttribute('placeholder', 'Search for...');
+        searchField.setAttribute('autocomplete', 'off');
+
+        // fitur search AJAX
+        if (searchForm && searchInput && masonryContainer) {
+            searchForm.addEventListener("submit", function(e) {
+                e.preventDefault();
+                const keyword = searchInput.value.trim();
+
+                if (keyword.length > 0) {
+                    fetch(`search.php?s=${encodeURIComponent(keyword)}`)
+                        .then(response => response.text())
+                        .then(data => {
+                            masonryContainer.innerHTML = data;
+                            // reinitialize Masonry jika perlu
+                            if (typeof Masonry !== "undefined") {
+                                new Masonry(masonryContainer, {
+                                    itemSelector: ".brick",
+                                    columnWidth: ".brick",
+                                    percentPosition: true
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Search error:", error);
+                        });
+                }
+            });
+        }
+    };
+
+    // Panggil saat halaman siap
+    document.addEventListener("DOMContentLoaded", function () {
+        ssSearch();
+    });
 
 
     // end ssSearch
@@ -299,27 +299,27 @@ document.addEventListener("DOMContentLoaded", function () {
     /* hero-swipper
     * -------------------------------------------------- */
     document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(function() {
-        try {
-            const swiper = new Swiper('.hero__slider', {
-                init: false, 
-            });
-            
-            swiper.on('init', function() {
-                console.log('Swiper initialized with slides:', swiper.slides.length);
-            });
-            
-            swiper.init(); 
-            
-            setTimeout(() => {
-                swiper.update();
-                swiper.slideTo(0, 0);
-                console.log('Swiper updated');
-            }, 300);
-        } catch (e) {
-            console.error('Swiper error:', e);
-        }
-    }, 500);
+        setTimeout(function() {
+            try {
+                const swiper = new Swiper('.hero__slider', {
+                    init: false, 
+                });
+                
+                swiper.on('init', function() {
+                    console.log('Swiper initialized with slides:', swiper.slides.length);
+                });
+                
+                swiper.init(); 
+                
+                setTimeout(() => {
+                    swiper.update();
+                    swiper.slideTo(0, 0);
+                    console.log('Swiper updated');
+                }, 300);
+            } catch (e) {
+                console.error('Swiper error:', e);
+            }
+        }, 500);
     });
 
 

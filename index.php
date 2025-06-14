@@ -5,9 +5,6 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" >
 <head>
-
-    <!--- basic page needs
-    ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ruangku.</title>
@@ -17,13 +14,9 @@
         document.documentElement.classList.add('js');
     </script>
 
-    <!-- CSS
-    ================================================== -->
     <link rel="stylesheet" href="css/vendor.css">
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- favicons
-    ================================================== -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -37,10 +30,6 @@
 
 
 <body id="top">
-
-
-    <!-- preloader
-    ================================================== -->
     <div id="preloader">
         <div id="loader" class="dots-fade">
             <div></div>
@@ -49,14 +38,7 @@
         </div>
     </div>
 
-
-    <!-- page wrap
-    ================================================== -->
     <div id="page" class="s-pagewrap ss-home">
-
-
-        <!-- # site header 
-        ================================================== -->
         <header id="masthead" class="s-header">
 
             <div class="s-header__branding">
@@ -76,11 +58,11 @@
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
                         <li><a href="auth/login.php" title="">Login/Register</a></li>
-                    </ul> <!-- end s-header__nav -->
+                    </ul>
 
-                </nav> <!-- end s-header__nav-wrap -->
+                </nav>
     
-            </div> <!-- end s-header__navigation -->
+            </div>
 
             <div class="s-header__search">
 
@@ -96,10 +78,10 @@
     
                         <a href="#0" title="Close Search" class="s-header__search-close">Close</a>
     
-                    </div> <!-- end row -->
-                </div> <!-- s-header__search-inner -->
+                    </div>
+                </div>
     
-            </div> <!-- end s-header__search -->
+            </div>
 
             <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
             <a class="s-header__search-trigger" href="#">
@@ -108,15 +90,12 @@
                 </svg>
             </a>
 
-        </header> <!-- end s-header -->
+        </header>
 
 
-        <!-- # site-content
-        ================================================== -->
         <section id="content" class="s-content">
 
 
-            <!-- hero -->
             <?php
             $query = "SELECT articles.*, users.username 
                     FROM articles 
@@ -141,27 +120,27 @@
                         <?php 
                         mysqli_data_seek($result, 0);
                         while ($row = mysqli_fetch_assoc($result)): ?>
-                        <article class="hero__slide swiper-slide">
-                            <div class="hero__entry-image" style="background-image: url('<?= getImage($row['image']) ?>');"></div>
-                            <div class="hero__entry-text">
-                                <div class="hero__entry-text-inner">
-                                    <div class="hero__entry-meta">
-                                        <span class="cat-links">
-                                            <a href="detail.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['username']) ?></a>
-                                        </span>
+                            <article class="hero__slide swiper-slide">
+                                <div class="hero__entry-image" style="background-image: url('<?= getImage($row['image']) ?>');"></div>
+                                <div class="hero__entry-text">
+                                    <div class="hero__entry-text-inner">
+                                        <div class="hero__entry-meta">
+                                            <span class="cat-links">
+                                                <a href="detail.php?id=<?= $row['id'] ?>"><?= htmlspecialchars($row['username']) ?></a>
+                                            </span>
+                                        </div>
+                                        <h2 class="hero__entry-title">
+                                            <a href="detail.php?id=<?= $row['id'] ?>">
+                                                <?= htmlspecialchars($row['title']) ?>
+                                            </a>
+                                        </h2>
+                                        <p class="hero__entry-desc">
+                                            <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
+                                        </p>
+                                        <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                                     </div>
-                                    <h2 class="hero__entry-title">
-                                        <a href="detail.php?id=<?= $row['id'] ?>">
-                                            <?= htmlspecialchars($row['title']) ?>
-                                        </a>
-                                    </h2>
-                                    <p class="hero__entry-desc">
-                                        <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
-                                    </p>
-                                    <a class="hero__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
                         <?php endwhile; ?>
                     </div>
                     <div class="swiper-pagination"></div>
@@ -174,10 +153,8 @@
                     <span>Scroll</span>
                 </a>
             </div>
-            <!-- end hero -->
 
 
-            <!--  masonry -->
             <div id="bricks" class="bricks">
 
                 <div class="masonry">
@@ -188,18 +165,15 @@
 
                         <?php
 
-                        // Ambil semua data artikel
-                        $limit = 6; // jumlah artikel per halaman
-                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // halaman saat ini
+                        $limit = 6;
+                        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
                         $offset = ($page - 1) * $limit;
 
-                        // Ambil total artikel
                         $totalResult = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM articles");
                         $totalRow = mysqli_fetch_assoc($totalResult);
                         $totalArticles = $totalRow['total'];
                         $totalPages = ceil($totalArticles / $limit);
 
-                        // Ambil artikel sesuai halaman
                         $query = "SELECT articles.*, users.username AS author_name FROM articles 
                                 JOIN users ON articles.user_id = users.user_id
                                 ORDER BY created_at DESC
@@ -207,7 +181,6 @@
                         $result = mysqli_query($koneksi, $query);
                         ?>
 
-                        <!-- Loop Artikel -->
                         <?php
                         if (mysqli_num_rows($result) > 0) {
                             while ($row = mysqli_fetch_assoc($result)) {
@@ -228,7 +201,7 @@
                                         <div class="entry__excerpt">
                                             <p>
                                                 <?= htmlspecialchars(substr(strip_tags($row['content']), 0, 150)) ?>...
-                                            </p>
+                                            </p>
                                         </div>
                                         <a class="entry__more-link" href="detail.php?id=<?= $row['id'] ?>">Read More</a>
                                     </div>
@@ -240,17 +213,15 @@
                         }
                         ?>
 
-                    </div> <!-- end bricks-wrapper -->
+                    </div>
 
-                </div> <!-- end masonry-->
+                </div>
 
 
-                <!-- pagination -->
                 <div class="row pagination">
                 <div class="column lg-12">
                     <nav class="pgn">
                         <ul>
-                            <!-- Tombol Prev -->
                             <?php if ($page > 1): ?>
                             <li>
                                 <a class="pgn__prev" href="?page=<?= $page - 1 ?>">
@@ -262,7 +233,6 @@
                             </li>
                             <?php endif; ?>
 
-                            <!-- Tombol Angka -->
                             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                                 <?php if ($i == $page): ?>
                                     <li><span class="pgn__num current"><?= $i ?></span></li>
@@ -271,7 +241,6 @@
                                 <?php endif; ?>
                             <?php endfor; ?>
 
-                            <!-- Tombol Next -->
                             <?php if ($page < $totalPages): ?>
                             <li>
                                 <a class="pgn__next" href="?page=<?= $page + 1 ?>">
@@ -288,13 +257,11 @@
                 </div>
 
 
-            </div> <!-- end bricks -->
+            </div>
 
-        </section> <!-- end s-content -->
+        </section>
 
 
-        <!-- # site-footer
-        ================================================== -->
         <footer id="colophon" class="s-footer">
             <div class="row s-footer__main">
 
@@ -306,7 +273,7 @@
                     dan inspirasi dibagikan dengan hangat. Dari opini ringan hingga 
                     tulisan reflektif — semuanya untuk kamu.
                     </p>
-                </div> <!-- end s-footer__about -->
+                </div>
 
                 <div class="column lg-5 md-6 tab-12">
                     <div class="row">
@@ -321,7 +288,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end s-footer__main -->
+            </div>
 
             <div class="row s-footer__bottom">
 
@@ -359,7 +326,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end s-footer__bottom -->
+            </div> 
            
             <div class="ss-go-top">
                 <a class="smoothscroll" title="Back to Top" href="#top">
@@ -368,13 +335,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19.25V5.75"/>
                     </svg>
                 </a>
-            </div> <!-- end ss-go-top -->
+            </div>
 
-        </footer><!-- end s-footer -->
+        </footer>
 
 
-    <!-- Java Script
-    ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 

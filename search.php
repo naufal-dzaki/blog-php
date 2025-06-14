@@ -6,7 +6,6 @@
     $offset = ($page - 1) * $limit;
     $keyword = mysqli_real_escape_string($koneksi, $_GET['s'] ?? '');
 
-    // Hitung total hasil
     $countQuery = "SELECT COUNT(*) AS total 
                 FROM articles 
                 JOIN users ON articles.user_id = users.user_id 
@@ -15,7 +14,6 @@
     $totalArticles = mysqli_fetch_assoc($countResult)['total'];
     $totalPages = ceil($totalArticles / $limit);
 
-    // Ambil data artikel sesuai pencarian
     $query = "SELECT articles.*, users.username AS author_name 
             FROM articles 
             JOIN users ON articles.user_id = users.user_id 
@@ -28,9 +26,6 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js" >
 <head>
-
-    <!--- basic page needs
-    ================================================== -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ruangku.</title>
@@ -40,13 +35,9 @@
         document.documentElement.classList.add('js');
     </script>
 
-    <!-- CSS
-    ================================================== -->
     <link rel="stylesheet" href="css/vendor.css">
     <link rel="stylesheet" href="css/styles.css">
 
-    <!-- favicons
-    ================================================== -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
@@ -58,8 +49,6 @@
 <body id="top">
 
 
-    <!-- preloader
-    ================================================== -->
     <div id="preloader">
         <div id="loader" class="dots-fade">
             <div></div>
@@ -69,13 +58,9 @@
     </div>
 
 
-    <!-- page wrap
-    ================================================== -->
     <div id="page" class="s-pagewrap ss-home">
 
 
-        <!-- # site header 
-        ================================================== -->
         <header id="masthead" class="s-header">
 
             <div class="s-header__branding">
@@ -95,11 +80,11 @@
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact.html" title="">Contact</a></li>
                         <li><a href="auth/login.php" title="">Login/Register</a></li>
-                    </ul> <!-- end s-header__nav -->
+                    </ul>
 
-                </nav> <!-- end s-header__nav-wrap -->
-    
-            </div> <!-- end s-header__navigation -->
+                </nav>
+
+            </div>
 
             <?php $keyword = $_GET['s'] ?? ''; ?>
 
@@ -126,14 +111,11 @@
                 </svg>
             </a>
 
-        </header> <!-- end s-header -->
+        </header>
 
 
-        <!-- # site-content
-        ================================================== -->
         <section id="content" class="s-content">
 
-            <!--  masonry -->
             <div id="bricks" class="bricks">
             
                 <div class="masonry">
@@ -141,7 +123,6 @@
                     <div class="bricks-wrapper" data-animate-block>
 
                         <div class="grid-sizer"></div>
-                        <!-- Loop Artikel -->
                         <?php if (mysqli_num_rows($result) > 0): ?>
                             <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                 <article class="brick entry">
@@ -171,12 +152,11 @@
                             <p>Tidak ada artikel ditemukan untuk <strong><?= htmlspecialchars($keyword) ?></strong>.</p>
                         <?php endif; ?>
 
-                    </div> <!-- end bricks-wrapper -->
+                    </div>
 
-                </div> <!-- end masonry-->
+                </div>
 
 
-                <!-- pagination -->
                 <?php if ($totalPages > 1): ?>
                 <div class="row pagination">
                     <div class="column lg-12">
@@ -203,13 +183,11 @@
                 </div>
                 <?php endif; ?>
 
-            </div> <!-- end bricks -->
+            </div>
 
-        </section> <!-- end s-content -->
+        </section>
 
 
-        <!-- # site-footer
-        ================================================== -->
         <footer id="colophon" class="s-footer">
             <div class="row s-footer__main">
 
@@ -221,7 +199,7 @@
                     dan inspirasi dibagikan dengan hangat. Dari opini ringan hingga 
                     tulisan reflektif — semuanya untuk kamu.
                     </p>
-                </div> <!-- end s-footer__about -->
+                </div>
 
                 <div class="column lg-5 md-6 tab-12">
                     <div class="row">
@@ -236,7 +214,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end s-footer__main -->
+            </div>
 
             <div class="row s-footer__bottom">
 
@@ -274,7 +252,7 @@
                     </div>
                 </div>
 
-            </div> <!-- end s-footer__bottom -->
+            </div>
            
             <div class="ss-go-top">
                 <a class="smoothscroll" title="Back to Top" href="#top">
@@ -283,13 +261,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 19.25V5.75"/>
                     </svg>
                 </a>
-            </div> <!-- end ss-go-top -->
+            </div>
 
-        </footer><!-- end s-footer -->
+        </footer>
 
 
-    <!-- Java Script
-    ================================================== -->
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     

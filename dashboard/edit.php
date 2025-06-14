@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <aside class="left-sidebar">
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="../index.html" class="text-nowrap logo-img" style="font-size: 1.5rem; font-weight: bold;">
+                    <a href="../index.php" class="text-nowrap logo-img" style="font-size: 1.5rem; font-weight: bold;">
                         Ruangku
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
